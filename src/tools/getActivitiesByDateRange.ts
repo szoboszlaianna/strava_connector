@@ -66,30 +66,94 @@ export const getActivitiesByDateRangeTool = {
           const activityDate = new Date(activity.start_date_local);
           return {
             id: activity.id,
+            resource_state: activity.resource_state,
+            external_id: activity.external_id,
+            upload_id: activity.upload_id,
+            upload_id_str: activity.upload_id_str,
             name: activity.name,
             type: activity.type,
+            sport_type: activity.sport_type,
+            device_name: activity.device_name,
             date: activityDate.toLocaleDateString(),
             day_of_week: activityDate.toLocaleDateString("en-US", {
               weekday: "long",
             }),
+            start_date: activity.start_date,
+            start_date_local: activity.start_date_local,
+            timezone: activity.timezone,
+            utc_offset: activity.utc_offset,
             distance: {
               kilometers: (activity.distance / 1000).toFixed(2),
               meters: Math.round(activity.distance),
             },
             duration: {
               formatted: formatTime(activity.moving_time),
+              moving_time_seconds: activity.moving_time,
+              elapsed_time_seconds: activity.elapsed_time,
               minutes: Math.round(activity.moving_time / 60),
             },
             pace_per_km: formatPace(activity.average_speed),
-            speed_kmh: formatSpeed(activity.average_speed),
-            elevation_gain_meters: formatElevation(
-              activity.total_elevation_gain,
-            ),
+            speed: {
+              average_kmh: formatSpeed(activity.average_speed),
+              max_kmh: formatSpeed(activity.max_speed),
+              average_ms: activity.average_speed,
+              max_ms: activity.max_speed,
+            },
+            elevation: {
+              gain_meters: formatElevation(activity.total_elevation_gain),
+              highest_point: activity.elev_high
+                ? formatElevation(activity.elev_high)
+                : "N/A",
+              lowest_point: activity.elev_low
+                ? formatElevation(activity.elev_low)
+                : "N/A",
+              total_elevation_gain: activity.total_elevation_gain,
+            },
+            location: {
+              city: activity.location_city,
+              state: activity.location_state,
+              country: activity.location_country,
+              start_latlng: activity.start_latlng,
+              end_latlng: activity.end_latlng,
+            },
             heart_rate: {
               average: activity.average_heartrate || null,
               max: activity.max_heartrate || null,
+              has_heartrate: activity.has_heartrate,
+              opt_out: activity.heartrate_opt_out || false,
             },
-            suffer_score: activity.suffer_score || null,
+            power: {
+              average_watts: activity.average_watts || null,
+              max_watts: activity.max_watts || null,
+              weighted_average_watts: activity.weighted_average_watts || null,
+              device_watts: activity.device_watts || false,
+              average_cadence: activity.average_cadence || null,
+              average_temp: activity.average_temp || null,
+              kilojoules: activity.kilojoules || null,
+            },
+            engagement: {
+              kudos: activity.kudos_count || 0,
+              comments: activity.comment_count || 0,
+              achievements: activity.achievement_count || 0,
+              athletes_count: activity.athlete_count || 1,
+              photos: activity.photo_count || 0,
+              has_kudoed: activity.has_kudoed,
+              pr_count: activity.pr_count || 0,
+            },
+            flags: {
+              trainer: activity.trainer,
+              commute: activity.commute,
+              manual: activity.manual,
+              private: activity.private,
+              flagged: activity.flagged,
+              from_accepted_tag: activity.from_accepted_tag,
+            },
+            gear_id: activity.gear_id,
+            map: activity.map,
+            performance: {
+              workout_type: activity.workout_type || null,
+              total_photo_count: activity.total_photo_count || 0,
+            },
           };
         }),
       };

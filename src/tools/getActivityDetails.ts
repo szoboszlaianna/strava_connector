@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { StravaActivity } from "../types.js";
+import {  StravaActivityDetails } from "../types.js";
 import { formatTime, formatPace, formatSpeed, formatElevation } from "../utils.js";
 import { stravaApi, handleStravaError } from "../strava.js";
 
@@ -12,7 +12,7 @@ export const getActivityDetailsTool = {
   handler: async ({ activity_id }: { activity_id: number }) => {
     try {
       const response = await stravaApi.get(`/activities/${activity_id}`);
-      const activity: StravaActivity = response.data;
+      const activity: StravaActivityDetails = response.data;
 
       const activityDate = new Date(activity.start_date_local);
       const details = {
