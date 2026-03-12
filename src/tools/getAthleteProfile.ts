@@ -4,7 +4,7 @@ import { stravaApi, handleStravaError } from "../strava.js";
 
 export const getAthleteProfileTool = {
   description:
-    "Get the athlete's profile information including name, location, and social stats.",
+    "Get the athlete's profile information including name, location, gears, bikes, shoes and social stats.",
   inputSchema: {},
   handler: async () => {
     try {
