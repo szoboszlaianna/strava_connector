@@ -12,21 +12,88 @@ export const getAthleteProfileTool = {
       const athlete: StravaAthlete = response.data;
 
       const profile = {
-        basic_info: {
-          name: `${athlete.firstname} ${athlete.lastname}`,
-          location: `${athlete.city}, ${athlete.state}, ${athlete.country}`
+        // Core identifiers
+        id: athlete.id,
+        resource_state: athlete.resource_state,
+        
+        // Basic info
+        firstname: athlete.firstname,
+        lastname: athlete.lastname,
+        name: `${athlete.firstname} ${athlete.lastname}`,
+        username: athlete.username,
+        
+        // Location
+        location: {
+          city: athlete.city,
+          state: athlete.state,
+          country: athlete.country,
+          formatted: `${athlete.city}, ${athlete.state}, ${athlete.country}`
             .replace(/^, , /, "")
             .replace(/, , /, ", "),
-          member_since: new Date(athlete.created_at).toLocaleDateString(),
-          profile_image_url: athlete.profile,
         },
+        
+        // Personal info
+        sex: athlete.sex,
+        premium: athlete.premium,
+        athlete_type: athlete.athlete_type,
+        
+        // Profile images
+        profile_images: {
+          medium: athlete.profile_medium,
+          large: athlete.profile,
+        },
+        
+        // Account dates
+        member_since: new Date(athlete.created_at).toLocaleDateString(),
+        created_at: athlete.created_at,
+        updated_at: athlete.updated_at,
+        
+        // Preferences
+        preferences: {
+          date_preference: athlete.date_preference,
+          measurement_preference: athlete.measurement_preference,
+        },
+        
+        // Social stats
         social: {
           followers: athlete.follower_count || 0,
           following: athlete.friend_count || 0,
+          mutual_friends: athlete.mutual_friend_count || 0,
+          friend: athlete.friend,
+          follower: athlete.follower,
         },
+        
+        // Performance
+        ftp: athlete.ftp || null,
+        weight: athlete.weight,
+        badge_type_id: athlete.badge_type_id,
+        
+        // Equipment
+        bikes: (athlete.bikes || []).map((bike) => ({
+          id: bike.id,
+          name: bike.name,
+          primary: bike.primary,
+          resource_state: bike.resource_state,
+          distance: bike.distance,
+        })),
+        
+        shoes: (athlete.shoes || []).map((shoe) => ({
+          id: shoe.id,
+          name: shoe.name,
+          primary: shoe.primary,
+          resource_state: shoe.resource_state,
+          distance: shoe.distance,
+        })),
+        
+        // Other
+        clubs: athlete.clubs || [],
+        
+        // Summary
         strava_profile: {
           athlete_id: athlete.id,
           created_at: athlete.created_at,
+          is_premium: athlete.premium,
+          has_heartrate_data: (athlete.ftp !== null && athlete.ftp !== undefined),
         },
       };
 
