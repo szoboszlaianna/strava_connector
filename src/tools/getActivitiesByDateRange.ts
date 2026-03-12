@@ -41,7 +41,7 @@ export const getActivitiesByDateRangeTool = {
         params: {
           before: endTimestamp,
           after: startTimestamp,
-          per_page: 200,
+          per_page: 5,
         },
       });
 

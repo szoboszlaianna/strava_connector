@@ -10,9 +10,9 @@ export const getRecentActivitiesTool = {
     limit: z
       .number()
       .min(1)
-      .max(30)
-      .default(10)
-      .describe("Number of activities to fetch (default 10, max 30)"),
+      .max(5)
+      .default(5)
+      .describe("Number of activities to fetch (default 5, max 5)"),
     activity_type: z
       .string()
       .optional()
@@ -20,11 +20,11 @@ export const getRecentActivitiesTool = {
         "Filter by activity type (Run, Ride, Swim, etc.). Leave empty for all types",
       ),
   },
-  handler: async ({ limit = 10, activity_type }: { limit?: number; activity_type?: string }) => {
+  handler: async ({ limit = 5, activity_type }: { limit?: number; activity_type?: string }) => {
     try {
       const response = await stravaApi.get("/athlete/activities", {
         params: {
-          per_page: Math.min(limit, 30),
+          per_page: Math.min(limit, 5),
           page: 1,
         },
       });
