@@ -3,6 +3,5 @@ dist/
 build/
 *.log
 .env
-src./.end
 .vscode/
 
