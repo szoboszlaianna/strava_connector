@@ -56,9 +56,9 @@ export const getAthleteProfileTool = {
         
         // Social stats
         social: {
-          followers: athlete.follower_count || 0,
-          following: athlete.friend_count || 0,
-          mutual_friends: athlete.mutual_friend_count || 0,
+          followers: athlete.follower_count,
+          following: athlete.friend_count,
+          mutual_friends: athlete.mutual_friend_count,
           friend: athlete.friend,
           follower: athlete.follower,
         },
@@ -85,8 +85,13 @@ export const getAthleteProfileTool = {
           distance: shoe.distance,
         })),
         
-        // Other
-        clubs: athlete.clubs || [],
+        // Clubs
+        clubs: (athlete.clubs || []).map((club: any) => ({
+          id: club.id,
+          name: club.name,
+          resource_state: club.resource_state,
+          sport_type: club.sport_type,
+        })),
         
         // Summary
         strava_profile: {
