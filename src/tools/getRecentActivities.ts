@@ -10,9 +10,9 @@ export const getRecentActivitiesTool = {
     limit: z
       .number()
       .min(1)
-      .max(5)
-      .default(5)
-      .describe("Number of activities to fetch (default 5, max 5)"),
+      .max(30)
+      .default(10)
+      .describe("Number of activities to fetch (default 10, max 30)"),
     activity_type: z
       .string()
       .optional()
